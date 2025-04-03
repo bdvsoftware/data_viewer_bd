@@ -25,14 +25,14 @@ CREATE TABLE Video (
     name TEXT,
     url TEXT NOT NULL,
     duration FLOAT NOT NULL,
-    FOREIGN KEY (Session_id) REFERENCES Session(Session_id) 
+    FOREIGN KEY (Session_id) REFERENCES Session(Session_id)
 );
 
 CREATE TABLE Frame (
     frame_id SERIAL PRIMARY KEY,
     video_id INT NOT NULL,
     timestamp TIMESTAMP NOT NULL,
-    FOREIGN KEY (video_id) REFERENCES Video(video_id) 
+    FOREIGN KEY (video_id) REFERENCES Video(video_id)
 );
 
 CREATE TABLE Team (
@@ -54,7 +54,7 @@ CREATE TABLE Onboard_Frame (
     driver_id INT,
     timestamp TIMESTAMP NOT NULL,
     FOREIGN KEY (frame_id) REFERENCES Frame(frame_id),
-    FOREIGN KEY (driver_id) REFERENCES Driver(driver_id) 
+    FOREIGN KEY (driver_id) REFERENCES Driver(driver_id)
 );
 
 CREATE TABLE Drivereye_Frame (
@@ -69,18 +69,27 @@ CREATE TABLE Drivereye_Frame (
 CREATE TABLE Pitboost_Frame (
     pitboost_id SERIAL PRIMARY KEY,
     frame_id INT NOT NULL,
-    driver_id INT,
     status INT,
     timestamp TIMESTAMP NOT NULL,
-    FOREIGN KEY (frame_id) REFERENCES Frame(frame_id),
-    FOREIGN KEY (driver_id) REFERENCES Driver(driver_id)
+    FOREIGN KEY (frame_id) REFERENCES Frame(frame_id)
 );
+
+CREATE TABLE Pitboost_frame_Driver (
+    pitboost_id INT NOT NULL,
+    driver_id INT NOT NULL,
+    PRIMARY KEY (pitboost_id, driver_id),
+    FOREIGN KEY (pitboost_id) REFERENCES Pitboost_Frame(pitboost_id) ON DELETE CASCADE,
+    FOREIGN KEY (driver_id) REFERENCES Driver(driver_id) ON DELETE CASCADE
+);
+
 
 CREATE TABLE Wideshot_Frame (
     wideshot_id SERIAL PRIMARY KEY,
+    frame_id INT NOT NULL,
     timestamp TIMESTAMP NOT NULL,
     video_url TEXT,
-    duration FLOAT NOT NULL
+    duration FLOAT NOT NULL,
+    FOREIGN KEY (frame_id) REFERENCES Frame(frame_id)
 );
 
 CREATE TABLE Driver_Wideshot_Frame (
