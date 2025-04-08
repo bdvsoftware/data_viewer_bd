@@ -31,6 +31,7 @@ CREATE TABLE Video (
 CREATE TABLE Frame (
     frame_id SERIAL PRIMARY KEY,
     video_id INT NOT NULL,
+    seq INT NOT NULL,
     timestamp TIMESTAMP NOT NULL,
     FOREIGN KEY (video_id) REFERENCES Video(video_id)
 );
