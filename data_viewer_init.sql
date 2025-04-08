@@ -25,6 +25,8 @@ CREATE TABLE Video (
     name TEXT,
     url TEXT NOT NULL,
     duration FLOAT NOT NULL,
+    total_frames int not null,
+    status TEXT not null,
     FOREIGN KEY (session_id) REFERENCES Session(session_id)
 );
 
